@@ -238,10 +238,10 @@ if (trigger == -1) {
     console.log(warningCount);
 }
 list = [];
-async function getVal(){
-    const response = await fetch('http://localhost:3000/api/question/get',{
-        mode:'cors',
-        method:'GET'
+async function getVal() {
+    const response = await fetch('http://localhost:3000/api/question/get', {
+        mode: 'cors',
+        method: 'GET'
     })
     // console.log(await val.json())
     data = await response.json()
@@ -304,14 +304,14 @@ document.getElementById('prev').addEventListener('click', () => {
         question = question1 - 1;
         document.getElementById('question').innerText = `Question:${question}`
         para.innerText = list[question1 - 2].question;
-        radio1.innerHTML = `<input type="radio" class="form-check-input" name="optradio" value="${list[question1 - 2].opt1}">${list[question1 - 2].opt1}`;
+        radio1.innerHTML = `<input type="radio" class="form-check-input" id="el1" name="optradio" value="${list[question1 - 2].opt1}">${list[question1 - 2].opt1}`;
         console.log(radio1);
 
-        radio2.innerHTML = `<input type="radio" class="form-check-input" name="optradio" value="${list[question1 - 2].opt2}">${list[question1 - 2].opt2}`;
+        radio2.innerHTML = `<input type="radio" class="form-check-input" id="el2" name="optradio" value="${list[question1 - 2].opt2}">${list[question1 - 2].opt2}`;
 
-        radio3.innerHTML = `<input type="radio" class="form-check-input" name="optradio" value="${list[question1 - 2].opt3}">${list[question1 - 2].opt3}`;
+        radio3.innerHTML = `<input type="radio" class="form-check-input"id="el3" name="optradio" value="${list[question1 - 2].opt3}">${list[question1 - 2].opt3}`;
 
-        radio4.innerHTML = `<input type="radio" class="form-check-input" name="optradio" value="${list[question1 - 2].opt4}">${list[question1 - 2].opt4}`;
+        radio4.innerHTML = `<input type="radio" class="form-check-input" id="el4" name="optradio" value="${list[question1 - 2].opt4}">${list[question1 - 2].opt4}`;
     }
     if (question1 == 1) {
         document.getElementById('prev').setAttribute('disabled', '');
@@ -326,14 +326,14 @@ document.getElementById('next').addEventListener('click', () => {
         question = question1 + 1;
         document.getElementById('question').innerText = `Question:${question}`
         para.innerText = list[question1].question;
-        radio1.innerHTML = `<input type="radio" class="form-check-input" name="optradio" value="${list[question1 - 1].opt1}">${list[question1].opt1}`;
+        radio1.innerHTML = `<input type="radio" class="form-check-input" id="el1" name="optradio" value="${list[question1 - 1].opt1}">${list[question1].opt1}`;
         console.log(radio1);
 
-        radio2.innerHTML = `<input type="radio" class="form-check-input" name="optradio" value="${list[question1].opt2}">${list[question1].opt2}`;
+        radio2.innerHTML = `<input type="radio" class="form-check-input" id="el2" name="optradio" value="${list[question1].opt2}">${list[question1].opt2}`;
 
-        radio3.innerHTML = `<input type="radio" class="form-check-input" name="optradio" value="${list[question1].opt3}">${list[question1].opt3}`;
+        radio3.innerHTML = `<input type="radio" class="form-check-input" id="el3" name="optradio" value="${list[question1].opt3}">${list[question1].opt3}`;
 
-        radio4.innerHTML = `<input type="radio" class="form-check-input" name="optradio" value="${list[question1].opt4}">${list[question1].opt4}`;
+        radio4.innerHTML = `<input type="radio" class="form-check-input" id="el4" name="optradio" value="${list[question1].opt4}">${list[question1].opt4}`;
     }
     if (question1 >= 15) {
         document.getElementById('next').setAttribute('disabled', '');
@@ -342,6 +342,13 @@ document.getElementById('next').addEventListener('click', () => {
 
 // ! Save and next button configured
 document.getElementById('save').addEventListener('click', () => {
+    for (i = 1; i <= 4; i++) {
+        if (document.getElementById(`el${i}`).checked) {
+            // alert(document.getElementById(`el${i}`).value)
+            let ques = document.getElementById('para').innerText;
+            localStorage.setItem(ques, document.getElementById(`el${i}`).value)
+        }
+    }
     let question1 = document.getElementById('question').innerText.slice(9, 11);
     console.log(question1);
     if (parseInt(question1) == 1) {
@@ -351,14 +358,14 @@ document.getElementById('save').addEventListener('click', () => {
         document.getElementById('prev').removeAttribute('disabled');
     }
     para.innerText = list[question1].question;
-    radio1.innerHTML = `<input type="radio" class="form-check-input" name="optradio" value="${list[question1].opt1}">${list[question1].opt1}`;
+    radio1.innerHTML = `<input type="radio" class="form-check-input" id="el1" name="optradio" value="${list[question1].opt1}">${list[question1].opt1}`;
     console.log(radio1);
 
-    radio2.innerHTML = `<input type="radio" class="form-check-input" name="optradio" value="${list[question1].opt2}">${list[question1].opt2}`;
+    radio2.innerHTML = `<input type="radio" class="form-check-input" id="el2" name="optradio" value="${list[question1].opt2}">${list[question1].opt2}`;
 
-    radio3.innerHTML = `<input type="radio" class="form-check-input" name="optradio" value="${list[question1].opt3}">${list[question1].opt3}`;
+    radio3.innerHTML = `<input type="radio" class="form-check-input" id="el3" name="optradio" value="${list[question1].opt3}">${list[question1].opt3}`;
 
-    radio4.innerHTML = `<input type="radio" class="form-check-input" name="optradio" value="${list[question1].opt4}">${list[question1].opt4}`;
+    radio4.innerHTML = `<input type="radio" class="form-check-input" id="el4" name="optradio" value="${list[question1].opt4}">${list[question1].opt4}`;
     let value = document.getElementById('question');
     question = parseInt(question1) + 1;
     value.innerText = `Question:${question}`;
@@ -420,13 +427,13 @@ Array.from(document.getElementsByClassName('btn-get')).forEach((element) => {
         box2.innerText = `NotVisited:${list.length - visited}`;
         para.innerText = list[element.innerText - 1].question;
 
-        radio1.innerHTML = `<input type="radio" class="form-check-input"  name="optradio" value="${list[element.innerText - 1].opt1}">${list[element.innerText - 1].opt1}`;
+        radio1.innerHTML = `<input type="radio" class="form-check-input" id="el1"  name="optradio" value="${list[element.innerText - 1].opt1}">${list[element.innerText - 1].opt1}`;
 
-        radio2.innerHTML = `<input type="radio" class="form-check-input"  name="optradio" value="${list[element.innerText - 1].opt2}">${list[element.innerText - 1].opt2}`;
+        radio2.innerHTML = `<input type="radio" class="form-check-input" id="el2"  name="optradio" value="${list[element.innerText - 1].opt2}">${list[element.innerText - 1].opt2}`;
 
-        radio3.innerHTML = `<input type="radio" class="form-check-input"  name="optradio" value="${list[element.innerText - 1].opt3}">${list[element.innerText - 1].opt3}`;
+        radio3.innerHTML = `<input type="radio" class="form-check-input" id="el3"  name="optradio" value="${list[element.innerText - 1].opt3}">${list[element.innerText - 1].opt3}`;
 
-        radio4.innerHTML = `<input type="radio" class="form-check-input"  name="optradio" value="${list[element.innerText - 1].opt4}">${list[element.innerText - 1].opt4}`;
+        radio4.innerHTML = `<input type="radio" class="form-check-input" id="el4" name="optradio" value="${list[element.innerText - 1].opt4}">${list[element.innerText - 1].opt4}`;
 
         element.style.backgroundColor = 'rgb(183,0,0)';
         let question1 = parseInt(document.getElementById('question').innerText.slice(9, 11));
@@ -474,6 +481,24 @@ window.addEventListener('resize', () => {
     }
 })
 
+document.getElementById('trig').addEventListener('click', async () => {
+    for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        const value = localStorage.getItem(key);
+        await fetch('http://localhost:3000/api/answer/add', {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body:JSON.stringify({
+                "question":key,
+                "answer":value
+            })
+        })
+    }
+    localStorage.clear()
+})
 
 
 // ! disabling the keyboard
@@ -484,4 +509,3 @@ window.addEventListener('resize', () => {
 
 // ! disabling the right click
 document.addEventListener('contextmenu', event => event.preventDefault());
- 
