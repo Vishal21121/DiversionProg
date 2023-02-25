@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,33 +11,44 @@
 </head>
 
 <body>
-    <div id="container" style="height: 50px; background-color: rgba(108,117,125);"></div>
-    <div class="modal modal-signin position-static d-block bg-secondary py-5" tabindex="-1" role="dialog"
-        id="modalSignin" style="height: 93vh;">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content rounded-5 shadow">
-                <div class="modal-header p-5 pb-4 border-bottom-0">
-                    <!-- <h5 class="modal-title">Modal title</h5> -->
-                    <h2 class="fw-bold mb-0">Login</h2>
-                </div>
+    <div style="display:flex; ">
+        <div style="width: 50vw; background-color: rgb(89, 87, 87); height: 100vh; padding: 100px; ">
+            <h3 style="color:white">Instructions</h3>
+            <ul>
+                <li style="color: white;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Id dolores placeat, sequi, vel earum officiis modi consectetur dignissimos consequatur autem doloremque, minima saepe!</li>
+                <li style="color: white;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Id dolores placeat, sequi, vel earum officiis modi consectetur dignissimos consequatur autem doloremque, minima saepe!</li>
+                <li style="color: white;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Id dolores placeat, sequi, vel earum officiis modi consectetur dignissimos consequatur autem doloremque, minima saepe!</li>
+                <li style="color: white;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Id dolores placeat, sequi, vel earum officiis modi consectetur dignissimos consequatur autem doloremque, minima saepe!</li>
+            </ul>
+        </div>
+        <div style="width:50vw">
+            <div class="modal modal-signin position-static d-block  py-5" tabindex="-1" role="dialog" id="modalSignin">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content rounded-5 shadow">
+                        <div class="modal-header p-5 pb-4 border-bottom-0">
+                            <!-- <h5 class="modal-title">Modal title</h5> -->
+                            <h2 class="fw-bold mb-0">Login</h2>
+                        </div>
 
-                <div class="modal-body p-5 pt-0">
-                    <form >
-                        <div class="form-floating mb-3">
-                            <input type="email" class="form-control rounded-4"
-                                placeholder="name@example.com" id="email">
-                            <label for="floatingInput">Email address</label>
+                        <div class="modal-body p-5 pt-0">
+                            <form>
+                                <div class="form-floating mb-3">
+                                    <input type="email" class="form-control rounded-4" placeholder="name@example.com"
+                                        id="email">
+                                    <label for="floatingInput">Email address</label>
+                                </div>
+                                <div class="form-floating mb-3" style="display: flex;">
+                                    <input type="password" class="form-control rounded-4" id="password" minlength="5"
+                                        required placeholder="Password">
+                                    <label for="floatingPassword">Password</label>
+                                    <button class="btn btn-primary" style="width: 80px;" id="button">Show</button>
+                                </div>
+                                <button class="w-100 mb-2 btn btn-lg rounded-4 btn-primary" id="submit">Login</button>
+                            </form>
+                            <hr>
+                            <button class="w-100 mb-2 btn btn-lg rounded-4 btn-success" id="signup">Sign Up</button>
                         </div>
-                        <div class="form-floating mb-3" style="display: flex;">
-                            <input type="password" class="form-control rounded-4" id="password"
-                            minlength="5" required placeholder="Password">
-                            <label for="floatingPassword">Password</label>
-                            <button class="btn btn-primary" style="width: 80px;" id="button">Show</button>
-                        </div>
-                        <button class="w-100 mb-2 btn btn-lg rounded-4 btn-primary" id="submit">Login</button>
-                    </form>
-                    <hr>
-                    <button class="w-100 mb-2 btn btn-lg rounded-4 btn-success" id="signup" >Sign Up</button>
+                    </div>
                 </div>
             </div>
         </div>

@@ -1,6 +1,7 @@
 let warningCount = 0;
 let trigger = 0;
 let question = 1;
+let saved = 0;
 
 const alertCall = () => {
     location.href = 'http://127.0.0.1:5500/End.html'
@@ -175,11 +176,11 @@ async function initAudio() {
 
 }
 
-// window.onload = () => {
-//     initAudio();
-//     init();
-//     width();
-// }
+window.onload = () => {
+    // initAudio();
+    // init();
+    width();
+}
 
 getVal()
 // ! Tab change code
@@ -297,6 +298,18 @@ let box2 = document.getElementById('box2');
 let time = document.getElementById('time');
 let visited = 0;
 
+const markAns = ()=>{
+    console.log("hello")
+    let val = localStorage.getItem(document.getElementById('para').innerText)
+    if(val!=null){
+        for(i=1;i<=4;i++){
+            if(val==document.getElementById(`el${i}`).value){
+                document.getElementById(`el${i}`).checked = true
+            }
+        }
+    }
+}
+
 // ! Previous button configured 
 document.getElementById('prev').addEventListener('click', () => {
     let question1 = parseInt(document.getElementById('question').innerText.slice(9, 11));
@@ -316,6 +329,11 @@ document.getElementById('prev').addEventListener('click', () => {
     if (question1 == 1) {
         document.getElementById('prev').setAttribute('disabled', '');
     }
+    if(document.getElementById(question1).style.backgroundColor!='green')
+    {
+        document.getElementById(question1).style.backgroundColor = 'red'
+    }
+    markAns()
 })
 
 // ! Next button configured
@@ -338,6 +356,10 @@ document.getElementById('next').addEventListener('click', () => {
     if (question1 >= 15) {
         document.getElementById('next').setAttribute('disabled', '');
     }
+    if(document.getElementById(question1).style.backgroundColor!='green'){
+        document.getElementById(question1).style.backgroundColor = 'red'
+    }
+    markAns()
 })
 
 // ! Save and next button configured
@@ -350,6 +372,7 @@ document.getElementById('save').addEventListener('click', () => {
         }
     }
     let question1 = document.getElementById('question').innerText.slice(9, 11);
+    document.getElementById(question1).style.backgroundColor = 'green'
     console.log(question1);
     if (parseInt(question1) == 1) {
         document.getElementById('prev').setAttribute('disabled', '');
@@ -373,7 +396,11 @@ document.getElementById('save').addEventListener('click', () => {
         document.getElementById('save').innerText = 'Save and Submit';
         document.getElementById('next').setAttribute('disabled', '');
     }
-
+    markAns()
+    saved = saved+1;
+    console.log(document.getElementById('saved'))
+    document.getElementById('saved').innerText = `Saved: ${saved}`
+    document.getElementById('unsaved').innerText = `Unsaved: ${15-saved}`
 })
 
 // ! Timer Code
@@ -437,23 +464,25 @@ Array.from(document.getElementsByClassName('btn-get')).forEach((element) => {
 
         element.style.backgroundColor = 'rgb(183,0,0)';
         let question1 = parseInt(document.getElementById('question').innerText.slice(9, 11));
-        console.log(question1);
         if (question1 > 1) {
             document.getElementById('prev').removeAttribute('disabled');
         }
         if (question1 === 15) {
             document.getElementById('save').innerText = 'Save and Submit';
             document.getElementById('next').setAttribute('disabled', '');
+            markAns()
         }
         else {
             document.getElementById('save').innerText = 'Save and Continue';
         }
         if (question1 < 15) {
             document.getElementById('next').removeAttribute('disabled');
+            markAns()
         }
         if (question1 === 1) {
             document.getElementById('prev').setAttribute('disabled', '');
         }
+        
     })
 })
 
@@ -481,24 +510,27 @@ window.addEventListener('resize', () => {
     }
 })
 
-document.getElementById('trig').addEventListener('click', async () => {
-    for (let i = 0; i < localStorage.length; i++) {
-        const key = localStorage.key(i);
-        const value = localStorage.getItem(key);
-        await fetch('http://localhost:3000/api/answer/add', {
-            method: 'POST',
-            mode: 'cors',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body:JSON.stringify({
-                "question":key,
-                "answer":value
+function trig(){
+    document.getElementById('trig').addEventListener('click', async () => {
+        for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            const value = localStorage.getItem(key);
+            await fetch('http://localhost:3000/api/answer/add', {
+                method: 'POST',
+                mode: 'cors',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body:JSON.stringify({
+                    "question":key,
+                    "answer":value
+                })
             })
-        })
-    }
-    localStorage.clear()
-})
+        }
+        localStorage.clear()
+    })  
+}
+
 
 
 // ! disabling the keyboard
