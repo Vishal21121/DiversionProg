@@ -325,6 +325,10 @@ document.getElementById('prev').addEventListener('click', () => {
         radio3.innerHTML = `<input type="radio" class="form-check-input"id="el3" name="optradio" value="${list[question1 - 2].opt3}">${list[question1 - 2].opt3}`;
 
         radio4.innerHTML = `<input type="radio" class="form-check-input" id="el4" name="optradio" value="${list[question1 - 2].opt4}">${list[question1 - 2].opt4}`;
+
+        if (parseInt(question1) <= 15) {
+            document.getElementById('prev').removeAttribute('disabled');
+        }
     }
     if (question1 == 1) {
         document.getElementById('prev').setAttribute('disabled', '');
@@ -333,6 +337,7 @@ document.getElementById('prev').addEventListener('click', () => {
     {
         document.getElementById(question1).style.backgroundColor = 'red'
     }
+    
     markAns()
 })
 
@@ -359,6 +364,10 @@ document.getElementById('next').addEventListener('click', () => {
     if(document.getElementById(question1).style.backgroundColor!='green'){
         document.getElementById(question1).style.backgroundColor = 'red'
     }
+    if (parseInt(question1) + 1 === 15) {
+        document.getElementById('save').innerText = 'Save and Submit';
+        document.getElementById('next').setAttribute('disabled', '');
+    }
     markAns()
 })
 
@@ -372,6 +381,7 @@ document.getElementById('save').addEventListener('click', () => {
         }
     }
     let question1 = document.getElementById('question').innerText.slice(9, 11);
+    console.log(question1)
     document.getElementById(question1).style.backgroundColor = 'green'
     console.log(question1);
     if (parseInt(question1) == 1) {
@@ -380,19 +390,23 @@ document.getElementById('save').addEventListener('click', () => {
     if (parseInt(question1) >= 1) {
         document.getElementById('prev').removeAttribute('disabled');
     }
-    para.innerText = list[question1].question;
-    radio1.innerHTML = `<input type="radio" class="form-check-input" id="el1" name="optradio" value="${list[question1].opt1}">${list[question1].opt1}`;
-    console.log(radio1);
-
-    radio2.innerHTML = `<input type="radio" class="form-check-input" id="el2" name="optradio" value="${list[question1].opt2}">${list[question1].opt2}`;
-
-    radio3.innerHTML = `<input type="radio" class="form-check-input" id="el3" name="optradio" value="${list[question1].opt3}">${list[question1].opt3}`;
-
-    radio4.innerHTML = `<input type="radio" class="form-check-input" id="el4" name="optradio" value="${list[question1].opt4}">${list[question1].opt4}`;
     let value = document.getElementById('question');
-    question = parseInt(question1) + 1;
+    if(question<15){
+        para.innerText = list[question1].question;
+        radio1.innerHTML = `<input type="radio" class="form-check-input" id="el1" name="optradio" value="${list[question1].opt1}">${list[question1].opt1}`;
+        console.log(radio1);
+    
+        radio2.innerHTML = `<input type="radio" class="form-check-input" id="el2" name="optradio" value="${list[question1].opt2}">${list[question1].opt2}`;
+    
+        radio3.innerHTML = `<input type="radio" class="form-check-input" id="el3" name="optradio" value="${list[question1].opt3}">${list[question1].opt3}`;
+    
+        radio4.innerHTML = `<input type="radio" class="form-check-input" id="el4" name="optradio" value="${list[question1].opt4}">${list[question1].opt4}`;
+        question = parseInt(question1) + 1;
+    }
+    
     value.innerText = `Question:${question}`;
-    if (parseInt(question1) + 1 === 15) {
+    if (parseInt(question1) == 15) {
+        trig()
         document.getElementById('save').innerText = 'Save and Submit';
         document.getElementById('next').setAttribute('disabled', '');
     }
@@ -462,7 +476,9 @@ Array.from(document.getElementsByClassName('btn-get')).forEach((element) => {
 
         radio4.innerHTML = `<input type="radio" class="form-check-input" id="el4" name="optradio" value="${list[element.innerText - 1].opt4}">${list[element.innerText - 1].opt4}`;
 
-        element.style.backgroundColor = 'rgb(183,0,0)';
+        if(element.style.backgroundColor!='green'){
+            element.style.backgroundColor = 'rgb(183,0,0)';
+        }
         let question1 = parseInt(document.getElementById('question').innerText.slice(9, 11));
         if (question1 > 1) {
             document.getElementById('prev').removeAttribute('disabled');
@@ -510,8 +526,8 @@ window.addEventListener('resize', () => {
     }
 })
 
-function trig(){
-    document.getElementById('trig').addEventListener('click', async () => {
+async function trig(){
+        console.log("hello")
         for (let i = 0; i < localStorage.length; i++) {
             const key = localStorage.key(i);
             const value = localStorage.getItem(key);
@@ -528,7 +544,6 @@ function trig(){
             })
         }
         localStorage.clear()
-    })  
 }
 
 
