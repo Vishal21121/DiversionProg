@@ -10,12 +10,12 @@ const { body, validationResult } = require('express-validator');
 router.post('/createuser', [
     body('name', "Username must have 5 characters").isLength({ min: 5 }),
     body('email', "Enter the valid email id").isEmail(),
-    body('password', "Password must have at least 5 characters").isLength({ min: 5 })],
+    body('password', "Password must have at least 8 characters").isLength({ min: 8 })],
     async (req, res) => {
         let success = false;
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() });
+            return res.status(400).json({ type:'error', errors: errors.array() });
         }
         try {
             let user = await User.findOne({ email: req.body.email });

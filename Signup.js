@@ -22,7 +22,7 @@ document.getElementById('password').addEventListener('input', (e) => {
 });
 
 // !  submit button is listened.
-document.getElementById('submit').addEventListener('click',async (e) => {
+document.getElementById('submit').addEventListener('click', async (e) => {
     e.preventDefault();
     const response = await fetch("http://localhost:3000/api/auth/createuser", {
         method: 'POST',
@@ -30,21 +30,30 @@ document.getElementById('submit').addEventListener('click',async (e) => {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({name:name1, email: email, password: password }),
+        body: JSON.stringify({ name: name1, email: email, password: password }),
     })
     const json = await response.json();
     console.log(json);
-    if(json.success == true) {
+    if (json.success == true) {
         // location.href = 'http://127.0.0.1:5500/exam.html';
-        window.open('http://127.0.0.1:5500/exam.html','_blank');
+        window.open('http://127.0.0.1:5500/login.html', '_blank');
 
     }
     else {
-        let element = document.getElementById('container');
-        element.innerHTML = `<div class="alert alert-warning alert-dismissible fade show" role="alert">
-       <strong>Error:</strong> This email id is already registered
+        if (json.type == 'error') {
+            let element = document.getElementById('container');
+            element.innerHTML = `<div class="alert alert-warning alert-dismissible fade show" role="alert">
+       <strong>Error:</strong> ${json.errors[0]['msg']}
        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
      </div>`
+        } else {
+            let element = document.getElementById('container');
+            element.innerHTML = `<div class="alert alert-warning alert-dismissible fade show" role="alert">
+           <strong>Error:</strong> This email id is already registered
+           <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+         </div>`
+        }
+
     }
 
     document.getElementById('name').value = '';
@@ -52,14 +61,14 @@ document.getElementById('submit').addEventListener('click',async (e) => {
     document.getElementById('password').value = '';
 });
 
-document.getElementById('button').addEventListener('click',(e)=>{
+document.getElementById('button').addEventListener('click', (e) => {
     let password = document.getElementById('password');
-    e.preventDefault(); 
-    if(password.type === 'password'){
+    e.preventDefault();
+    if (password.type === 'password') {
         password.type = 'text';
         document.getElementById('button').innerText = 'Hide';
     }
-    else{
+    else {
         password.type = 'password';
         document.getElementById('button').innerText = 'Show';
     }
