@@ -54,6 +54,10 @@ async function loop() {
     webcam.update(); // update the webcam frame
     await predict();
     window.requestAnimationFrame(loop);
+    if (warningCount == 10) {
+        location.href = 'http://127.0.0.1:5500/End.html';
+        document.body.innerHTML = `  <div class='jumbotron'><h2>Exam Over</h2></div>`;
+    }
 }
 
 async function predict() {
@@ -65,20 +69,7 @@ async function predict() {
         if (prediction[0].probability.toFixed(2) >= 0.90) {
 
         } else {
-            if (prediction[1].probability.toFixed(2) >= 0.90) {
-                document.getElementById('container1').innerHTML = `
-                <div><p id="question" style="margin: 10px 10px; color: white; width:10px;font-size: 20px;">Question:${question}</p>
-                </div>
-                <div class="alert alert-danger alert-dismissible fade show" role="alert" id='alert' style="opacity:1;height:43px; margin:auto;">
-                <strong>Warning:</strong> Only one hand is visible
-              </div>`;
-                setTimeout(() => {
-                    document.getElementById('alert').style.opacity = 0;
-
-                }, 5000)
-                trigger = -1;
-            }
-            else if (prediction[2].probability.toFixed(2) >= 0.90) {
+            if (prediction[2].probability.toFixed(2) >= 0.90) {
                 document.getElementById('container1').innerHTML = `
                 <div><p id="question" style="margin: 10px 10px; color: white; width:10px;font-size: 20px;">Question:${question}</p>
                 </div>
@@ -453,16 +444,18 @@ async function trig() {
             })
         })
     }
+    location.href = 'http://127.0.0.1:5500/End.html';
+    document.body.innerHTML = `  <div class='jumbotron'><h2>Exam Over</h2></div>`;
     localStorage.clear()
 }
 
 
 
 // ! disabling the keyboard
-// document.onkeydown = function (e) {
-//     e.preventDefault();
-//     return false;
-// }
+document.onkeydown = function (e) {
+    e.preventDefault();
+    return false;
+}
 
 // ! disabling the right click
 document.addEventListener('contextmenu', event => event.preventDefault());
