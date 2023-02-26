@@ -62,9 +62,6 @@ async function predict() {
     for (let i = 0; i < maxPredictions; i++) {
         const classPrediction =
             prediction[i].className + ": " + prediction[i].probability.toFixed(2);
-        // console.log(classPrediction[1]);
-        // console.log(classPrediction);
-        // console.log(prediction[i].probability.toFixed(2));
         if (prediction[0].probability.toFixed(2) >= 0.90) {
 
         } else {
@@ -135,7 +132,6 @@ if (trigger == -1) {
 }
 
 window.onload = () => {
-    // initAudio();
     init();
     width();
 }
@@ -421,6 +417,11 @@ window.addEventListener('resize', () => {
             var element = elements[i];
             element.setAttribute('disabled', '');
         }
+        document.getElementById('container1').innerHTML = `<div><p id="question" style="margin: 10px 10px; color: white; width:10px; font-size: 20px;">Question:${question}</p>
+        </div>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert" id='alert' style="opacity:1;height:43px; margin:auto;">
+        <strong>Warning!</strong> Don't resize your tab
+      </div>`
         warningCount++;
     }
     if (window.screen.width == window.innerWidth) {
